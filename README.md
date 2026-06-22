@@ -56,7 +56,7 @@ Patches sent upstream to **[MLX](https://github.com/ml-explore/mlx)**, Apple's m
 
 ---
 
-### `~/toolkit` &nbsp;·&nbsp; monochrome by choice, one palette like the site
+### `~/toolkit`
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-0A0A0A?style=flat-square&logo=typescript&logoColor=00FF41&v=2)
 ![Python](https://img.shields.io/badge/Python-0A0A0A?style=flat-square&logo=python&logoColor=00FF41&v=2)
