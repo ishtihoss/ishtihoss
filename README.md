@@ -34,7 +34,7 @@ const ishtiaque = {
 ```
 
 > Design, code, infra, support — every part of the product runs through one head.
-> Keeps the decisions fast and the product opinionated. &nbsp;`( ´ ｪ ` )`
+> Keeps the decisions fast and the product opinionated. &nbsp;``( ´ ｪ ` )``
 
 ---
 
@@ -95,6 +95,6 @@ Patches sent upstream to **[MLX](https://github.com/ml-explore/mlx)**, Apple's m
 
 <br>
 
-**`Building from Vancouver.`** &nbsp;`( ´ ｪ ` )`
+**`Building from Vancouver.`** &nbsp;``( ´ ｪ ` )``
 
 </div>
