@@ -58,20 +58,20 @@ Patches sent upstream to **[MLX](https://github.com/ml-explore/mlx)**, Apple's m
 
 ### `~/toolkit` &nbsp;·&nbsp; monochrome by choice, one palette like the site
 
-![TypeScript](https://img.shields.io/badge/TypeScript-0A0A0A?style=flat-square&logo=typescript&logoColor=00FF41)
-![Python](https://img.shields.io/badge/Python-0A0A0A?style=flat-square&logo=python&logoColor=00FF41)
-![JavaScript](https://img.shields.io/badge/JavaScript-0A0A0A?style=flat-square&logo=javascript&logoColor=00FF41)
-![Node.js](https://img.shields.io/badge/Node.js-0A0A0A?style=flat-square&logo=nodedotjs&logoColor=00FF41)
-![React](https://img.shields.io/badge/React-0A0A0A?style=flat-square&logo=react&logoColor=00FF41)
-![Next.js](https://img.shields.io/badge/Next.js-0A0A0A?style=flat-square&logo=nextdotjs&logoColor=00FF41)
-![FastAPI](https://img.shields.io/badge/FastAPI-0A0A0A?style=flat-square&logo=fastapi&logoColor=00FF41)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-0A0A0A?style=flat-square&logo=postgresql&logoColor=00FF41)
-![Tailwind](https://img.shields.io/badge/Tailwind-0A0A0A?style=flat-square&logo=tailwindcss&logoColor=00FF41)
-![MLX](https://img.shields.io/badge/MLX-0A0A0A?style=flat-square&logo=apple&logoColor=00FF41)
-![Cloudflare](https://img.shields.io/badge/Cloudflare-0A0A0A?style=flat-square&logo=cloudflare&logoColor=00FF41)
-![AWS](https://img.shields.io/badge/AWS-0A0A0A?style=flat-square&logo=amazonwebservices&logoColor=00FF41)
-![Linux](https://img.shields.io/badge/Linux-0A0A0A?style=flat-square&logo=linux&logoColor=00FF41)
-![Git](https://img.shields.io/badge/Git-0A0A0A?style=flat-square&logo=git&logoColor=00FF41)
+![TypeScript](https://img.shields.io/badge/TypeScript-0A0A0A?style=flat-square&logo=typescript&logoColor=00FF41&v=2)
+![Python](https://img.shields.io/badge/Python-0A0A0A?style=flat-square&logo=python&logoColor=00FF41&v=2)
+![JavaScript](https://img.shields.io/badge/JavaScript-0A0A0A?style=flat-square&logo=javascript&logoColor=00FF41&v=2)
+![Node.js](https://img.shields.io/badge/Node.js-0A0A0A?style=flat-square&logo=nodedotjs&logoColor=00FF41&v=2)
+![React](https://img.shields.io/badge/React-0A0A0A?style=flat-square&logo=react&logoColor=00FF41&v=2)
+![Next.js](https://img.shields.io/badge/Next.js-0A0A0A?style=flat-square&logo=nextdotjs&logoColor=00FF41&v=2)
+![FastAPI](https://img.shields.io/badge/FastAPI-0A0A0A?style=flat-square&logo=fastapi&logoColor=00FF41&v=2)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-0A0A0A?style=flat-square&logo=postgresql&logoColor=00FF41&v=2)
+![Tailwind](https://img.shields.io/badge/Tailwind-0A0A0A?style=flat-square&logo=tailwindcss&logoColor=00FF41&v=2)
+![MLX](https://img.shields.io/badge/MLX-0A0A0A?style=flat-square&logo=apple&logoColor=00FF41&v=2)
+![Cloudflare](https://img.shields.io/badge/Cloudflare-0A0A0A?style=flat-square&logo=cloudflare&logoColor=00FF41&v=2)
+![AWS](https://img.shields.io/badge/AWS-0A0A0A?style=flat-square&logo=amazonwebservices&logoColor=00FF41&v=2)
+![Linux](https://img.shields.io/badge/Linux-0A0A0A?style=flat-square&logo=linux&logoColor=00FF41&v=2)
+![Git](https://img.shields.io/badge/Git-0A0A0A?style=flat-square&logo=git&logoColor=00FF41&v=2)
 
 ---
 
