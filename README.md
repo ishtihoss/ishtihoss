@@ -79,8 +79,8 @@ Patches sent upstream to **[MLX](https://github.com/ml-explore/mlx)**, Apple's m
 
 <div align="center">
 
-<img height="170" alt="GitHub stats" src="https://github-readme-stats.vercel.app/api?username=ishtihoss&show_icons=true&include_all_commits=true&count_private=true&hide_border=false&title_color=00FF41&icon_color=00FF41&text_color=C9D1D9&bg_color=000000&border_color=0D3B1E&border_radius=8" />
-<img height="170" alt="Top languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=ishtihoss&layout=compact&langs_count=8&hide_border=false&title_color=00FF41&text_color=C9D1D9&bg_color=000000&border_color=0D3B1E&border_radius=8" />
+<img height="170" alt="GitHub stats" src="https://ghstats.porkicoder.com/api?username=ishtihoss&show_icons=true&include_all_commits=true&count_private=true&hide_border=false&title_color=00FF41&icon_color=00FF41&text_color=C9D1D9&bg_color=000000&border_color=0D3B1E&border_radius=8" />
+<img height="170" alt="Top languages" src="https://ghstats.porkicoder.com/api/top-langs/?username=ishtihoss&layout=compact&langs_count=8&hide_border=false&title_color=00FF41&text_color=C9D1D9&bg_color=000000&border_color=0D3B1E&border_radius=8" />
 
 <img alt="Streak" src="https://streak-stats.demolab.com?user=ishtihoss&hide_border=false&background=000000&border=0D3B1E&stroke=0D3B1E&ring=00FF41&fire=00FF41&currStreakNum=C9D1D9&currStreakLabel=00FF41&sideNums=C9D1D9&sideLabels=C9D1D9&dates=666666&border_radius=8" />
 
