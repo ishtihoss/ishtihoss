@@ -245,7 +245,7 @@ function loadout() {
   const W = 960;
   const cols = [
     { title: "MODELS & TRAINING", items: ["PyTorch", "Transformers", "Seq2seq · T5", "Distillation", "MLX", "ONNX Runtime"] },
-    { title: "AGENTS & PRODUCT", items: ["TypeScript", "Electron", "Node.js", "Claude Agent SDK", "MCP", "Python"] },
+    { title: "AGENTS & PRODUCT", items: ["JavaScript", "Electron", "Node.js", "Claude Agent SDK", "MCP", "Python"] },
     { title: "INFRA & EVALUATION", items: ["AWS", "Cloudflare", "Linux", "Supabase · Postgres", "GPU fleets", "LLM-judge evals"] },
   ];
   const colX = [28, 336, 644];
@@ -272,7 +272,7 @@ function loadout() {
   const H = maxY + 40;
   let dividers = "";
   cols.forEach((_, i) => { if (i > 0) dividers += `<path d="M${colX[i] - 24} 20 V${H - 34}" stroke="${C.edge}"/>`; });
-  return `${HEAD(W, H, "Loadout", "Models and training: PyTorch, Transformers, seq2seq T5, distillation, MLX, ONNX Runtime. Agents and product: TypeScript, Electron, Node.js, Claude Agent SDK, MCP, Python. Infrastructure and evaluation: AWS, Cloudflare, Linux, Supabase and Postgres, GPU fleets, LLM-judge evaluations.")}
+  return `${HEAD(W, H, "Loadout", "Models and training: PyTorch, Transformers, seq2seq T5, distillation, MLX, ONNX Runtime. Agents and product: JavaScript, Electron, Node.js, Claude Agent SDK, MCP, Python. Infrastructure and evaluation: AWS, Cloudflare, Linux, Supabase and Postgres, GPU fleets, LLM-judge evaluations.")}
   ${panelChrome(W, H)}
   ${dividers}
   ${body}

@@ -49,7 +49,7 @@ Patches sent upstream to MLX. The count below is live from the GitHub API.
 
 <img src="./assets/section-05-loadout.svg" alt="05 · Loadout — technical range" width="100%" />
 
-<img src="./assets/loadout.svg" alt="Models and training: PyTorch, Transformers, seq2seq T5, distillation, MLX, ONNX Runtime. Agents and product: TypeScript, Electron, Node.js, Claude Agent SDK, MCP, Python. Infrastructure and evaluation: AWS, Cloudflare, Linux, Supabase and Postgres, GPU fleets, LLM-judge evaluations." width="100%" />
+<img src="./assets/loadout.svg" alt="Models and training: PyTorch, Transformers, seq2seq T5, distillation, MLX, ONNX Runtime. Agents and product: JavaScript, Electron, Node.js, Claude Agent SDK, MCP, Python. Infrastructure and evaluation: AWS, Cloudflare, Linux, Supabase and Postgres, GPU fleets, LLM-judge evaluations." width="100%" />
 
 <img src="./assets/section-06-telemetry.svg" alt="06 · Telemetry — GitHub activity" width="100%" />
 
