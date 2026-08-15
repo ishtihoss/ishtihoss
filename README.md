@@ -1,89 +1,55 @@
 <!-- ishtihoss/ishtihoss · GitHub profile README -->
-<!-- Aesthetic: ishti.dev — Matrix emerald (#00ff41) on pure black, terminal + porcine. -->
-<!-- No custom CSS allowed on GitHub, so the palette is carried by tinted image services. -->
+<!-- Aesthetic: matte gunmetal, restrained emerald, industrial sci-fi. -->
 
 <div align="center">
 
-[![Maker of fine Porcine Software](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&duration=3400&pause=900&color=00FF41&center=true&vCenter=true&width=680&height=64&lines=Maker+of+fine+Porcine+Software.;Solo+founder+%C2%B7+Vancouver;Design.+Code.+Infra.+Support.+Solo.;git+push+origin+reality)](https://ishti.dev)
+<a href="https://ishti.dev">
+  <img src="./assets/profile-header.svg" alt="Ishtiaque Hossain — solo founder and engineer in Vancouver" width="100%" />
+</a>
 
-`solo founder · ai-native · end-to-end · maker of fine porcine software · vancouver`
+Independent product engineer building and operating AI-native software end to end.
 
-[![ishti.dev](https://img.shields.io/badge/ishti.dev-00FF41?style=for-the-badge&logoColor=000000&labelColor=00FF41)](https://ishti.dev)
-[![X](https://img.shields.io/badge/hornswoggle567-000000?style=for-the-badge&logo=x&logoColor=00FF41&labelColor=000000)](https://x.com/hornswoggle567)
-[![LinkedIn](https://img.shields.io/badge/ishtihoss-000000?style=for-the-badge&logo=linkedin&logoColor=00FF41&labelColor=000000)](https://linkedin.com/in/ishtihoss/)
-![Vancouver](https://img.shields.io/badge/Vancouver,_Canada-000000?style=for-the-badge&logo=googleearth&logoColor=00FF41&labelColor=000000)
+[![Website](https://img.shields.io/badge/ishti.dev-1B252B?style=flat-square&logo=googlechrome&logoColor=50C878)](https://ishti.dev) [![LinkedIn](https://img.shields.io/badge/LinkedIn-1B252B?style=flat-square&logo=linkedin&logoColor=50C878)](https://linkedin.com/in/ishtihoss/) [![X](https://img.shields.io/badge/hornswoggle567-1B252B?style=flat-square&logo=x&logoColor=50C878)](https://x.com/hornswoggle567)
 
 </div>
 
 ---
 
-### `$ whoami`
+## About
 
-```
-const ishtiaque = {
-  alias:      "ishtihoss",
-  role:       "Solo founder & engineer",
-  location:   "Vancouver, Canada",        // via Dhaka -> Kuala Lumpur -> Toronto
-  building:   ["porkicoder", "resumehog", "hogmatix"],
-  upstream:   "ml-explore/mlx",           // Apple's ML framework for Apple silicon
-  stack:      ["TypeScript", "Python", "LLM agents", "the whole stack"],
-  approach:   ["AI-native", "end-to-end", "bias to ship"],
-  coFounders: 0,
-  motto:      "Maker of fine Porcine Software.",
-};
-```
+I'm a solo founder and engineer based in Vancouver. I handle the full product surface: product decisions, interface design, backend systems, infrastructure, releases, and support.
 
-> Design, code, infra, support — every part of the product runs through one head.
-> Keeps the decisions fast and the product opinionated. &nbsp;``( ´ ｪ ` )``
+My current work centers on AI-native developer tools and focused software for people doing real work. I also contribute upstream to **[MLX](https://github.com/ml-explore/mlx)**, Apple's machine-learning framework for Apple silicon.
 
----
+## Products
 
-### `~/products` &nbsp;·&nbsp; three, all live
+| Product | Focus | What it does |
+|:--|:--|:--|
+| **[porkicoder](https://porkicoder.com)** | Agentic coding assistant | Reads code, edits files, runs commands, and coordinates parallel sub-agents. A collaborator, not another autocomplete. |
+| **[resumehog](https://resumehog.com)** | Resume optimization | Tailors a resume to a specific role by matching what hiring teams actually screen for. |
+| **[hogmatix](https://hogmatix.com)** | X automation | Schedules posts and operates multiple X accounts from one place. |
 
-|  | Product | What it does |
-|:--:|:--|:--|
-| `01` | **[porkicoder](https://porkicoder.com)** &nbsp;·&nbsp; *agentic coding assistant* | Reads code, edits files, runs commands, spawns sub-agents in parallel. A collaborator, not another autocomplete. |
-| `02` | **[resumehog](https://resumehog.com)** &nbsp;·&nbsp; *resume optimization* | Tailors a resume to a specific role in minutes by matching what hiring teams actually screen for. |
-| `03` | **[hogmatix](https://hogmatix.com)** &nbsp;·&nbsp; *X automation* | Schedule posts and run multiple X accounts from one panel, so showing up consistently doesn't eat the day. |
+## Open source
 
----
+Patches sent upstream to MLX. The count below is live from the GitHub API.
 
-### `~/upstream` &nbsp;·&nbsp; open source
+[![PRs to MLX](https://img.shields.io/github/issues-search?query=repo%3Aml-explore%2Fmlx%20author%3Aishtihoss%20type%3Apr&style=flat-square&label=PRs%20to%20MLX&labelColor=11171B&color=26323A&logo=apple&logoColor=50C878)](https://github.com/ml-explore/mlx/pulls?q=is%3Apr+author%3Aishtihoss)
 
-Patches sent upstream to **[MLX](https://github.com/ml-explore/mlx)**, Apple's machine-learning framework for Apple silicon. The count below is live from the GitHub API.
+## Technical range
 
-[![PRs to ml-explore/mlx](https://img.shields.io/github/issues-search?query=repo%3Aml-explore%2Fmlx%20author%3Aishtihoss%20type%3Apr&style=for-the-badge&label=PRs%20to%20ml-explore%2Fmlx&labelColor=000000&color=00FF41&logo=apple&logoColor=00FF41)](https://github.com/ml-explore/mlx/pulls?q=is%3Apr+author%3Aishtihoss)
+| Product & interface | Backend & data | Systems & infrastructure |
+|:--|:--|:--|
+| TypeScript, JavaScript, React, Next.js | Python, Node.js, FastAPI, PostgreSQL | MLX, AWS, Cloudflare, Linux, Git |
 
----
-
-### `~/toolkit`
-
-![TypeScript](https://img.shields.io/badge/TypeScript-0A0A0A?style=flat-square&logo=typescript&logoColor=00FF41&v=2)
-![Python](https://img.shields.io/badge/Python-0A0A0A?style=flat-square&logo=python&logoColor=00FF41&v=2)
-![JavaScript](https://img.shields.io/badge/JavaScript-0A0A0A?style=flat-square&logo=javascript&logoColor=00FF41&v=2)
-![Node.js](https://img.shields.io/badge/Node.js-0A0A0A?style=flat-square&logo=nodedotjs&logoColor=00FF41&v=2)
-![React](https://img.shields.io/badge/React-0A0A0A?style=flat-square&logo=react&logoColor=00FF41&v=2)
-![Next.js](https://img.shields.io/badge/Next.js-0A0A0A?style=flat-square&logo=nextdotjs&logoColor=00FF41&v=2)
-![FastAPI](https://img.shields.io/badge/FastAPI-0A0A0A?style=flat-square&logo=fastapi&logoColor=00FF41&v=2)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-0A0A0A?style=flat-square&logo=postgresql&logoColor=00FF41&v=2)
-![Tailwind](https://img.shields.io/badge/Tailwind-0A0A0A?style=flat-square&logo=tailwindcss&logoColor=00FF41&v=2)
-![MLX](https://img.shields.io/badge/MLX-0A0A0A?style=flat-square&logo=apple&logoColor=00FF41&v=2)
-![Cloudflare](https://img.shields.io/badge/Cloudflare-0A0A0A?style=flat-square&logo=cloudflare&logoColor=00FF41&v=2)
-![AWS](https://img.shields.io/badge/AWS-0A0A0A?style=flat-square&logo=amazonwebservices&logoColor=00FF41&v=2)
-![Linux](https://img.shields.io/badge/Linux-0A0A0A?style=flat-square&logo=linux&logoColor=00FF41&v=2)
-![Git](https://img.shields.io/badge/Git-0A0A0A?style=flat-square&logo=git&logoColor=00FF41&v=2)
-
----
-
-### `~/stats`
+## GitHub activity
 
 <div align="center">
 
-<img height="170" alt="GitHub stats" src="https://ghstats.porkicoder.com/api?username=ishtihoss&show_icons=true&include_all_commits=true&count_private=true&hide_border=false&title_color=00FF41&icon_color=00FF41&text_color=C9D1D9&bg_color=000000&border_color=0D3B1E&border_radius=8" />
-<img height="170" alt="Top languages" src="https://ghstats.porkicoder.com/api/top-langs/?username=ishtihoss&layout=compact&langs_count=8&hide_border=false&title_color=00FF41&text_color=C9D1D9&bg_color=000000&border_color=0D3B1E&border_radius=8" />
+<img height="170" alt="GitHub activity" src="https://ghstats.porkicoder.com/api?username=ishtihoss&show_icons=true&include_all_commits=true&count_private=true&hide_rank=true&hide_border=false&custom_title=GitHub%20activity&title_color=50C878&icon_color=50C878&text_color=D5DCE1&bg_color=135,0C1115,151C21&border_color=344149&border_radius=4" />
+<img height="170" alt="Most-used languages" src="https://ghstats.porkicoder.com/api/top-langs/?username=ishtihoss&layout=compact&langs_count=8&hide_progress=true&hide_border=false&custom_title=Languages&title_color=50C878&text_color=D5DCE1&bg_color=135,0C1115,151C21&border_color=344149&border_radius=4" />
 
-<!-- Generated twice daily by .github/workflows/snake.yml, avoiding a runtime image-service dependency. -->
-<img alt="Streak" src="https://raw.githubusercontent.com/ishtihoss/ishtihoss/output/streak.svg" />
+<!-- Generated twice daily by .github/workflows/profile-graphics.yml. -->
+<img alt="Contribution streak" src="https://raw.githubusercontent.com/ishtihoss/ishtihoss/output/streak.svg" />
 
 </div>
 
@@ -91,11 +57,6 @@ Patches sent upstream to **[MLX](https://github.com/ml-explore/mlx)**, Apple's m
 
 <div align="center">
 
-<!-- Contribution snake, tinted emerald. Populated by the workflow in .github/workflows/snake.yml -->
-<img alt="Contribution snake" src="https://raw.githubusercontent.com/ishtihoss/ishtihoss/output/snake-dark.svg" />
-
-<br>
-
-**`Building from Vancouver.`** &nbsp;``( ´ ｪ ` )``
+<sub>Building from Vancouver · design, code, infrastructure, support.</sub>
 
 </div>

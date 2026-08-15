@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 220" role="img" aria-labelledby="title description">
+  <title id="title">Ishtiaque Hossain</title>
+  <desc id="description">Solo founder and engineer in Vancouver. Maker of fine Porcine Software.</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#182126" />
+      <stop offset="0.46" stop-color="#0C1115" />
+      <stop offset="0.74" stop-color="#12191E" />
+      <stop offset="1" stop-color="#0A0F12" />
+    </linearGradient>
+    <linearGradient id="steel-edge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#26323A" />
+      <stop offset="0.5" stop-color="#52606A" />
+      <stop offset="1" stop-color="#26323A" />
+    </linearGradient>
+    <pattern id="brush" width="18" height="8" patternUnits="userSpaceOnUse">
+      <path d="M0 1.5H18 M0 5.5H18" stroke="#FFFFFF" stroke-opacity="0.018" stroke-width="0.5" />
+      <path d="M3 3.5H14" stroke="#000000" stroke-opacity="0.08" stroke-width="0.5" />
+    </pattern>
+    <clipPath id="panel-clip">
+      <rect x="1" y="1" width="958" height="218" rx="4" />
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#panel-clip)">
+    <rect x="1" y="1" width="958" height="218" fill="url(#panel)" />
+    <rect x="1" y="1" width="958" height="218" fill="url(#brush)" />
+    <path d="M1 2H959" stroke="url(#steel-edge)" />
+    <path d="M1 218H959" stroke="#05080A" />
+    <g fill="none" stroke="#2B363D" stroke-width="1" opacity="0.7">
+      <path d="M36 34H48 M36 186H48" />
+      <path d="M721 34H733 M721 186H733" />
+    </g>
+  </g>
+
+  <rect x="0.5" y="0.5" width="959" height="219" rx="4" fill="none" stroke="#344149" />
+  <path d="M36 48V172" stroke="#50C878" stroke-width="3" />
+
+  <g font-family="'Segoe UI', Inter, Arial, sans-serif">
+    <text x="58" y="66" fill="#50C878" font-size="12" font-weight="600" letter-spacing="3">SOLO FOUNDER · VANCOUVER</text>
+    <text x="56" y="121" fill="#D5DCE1" font-size="38" font-weight="600" letter-spacing="0.4">Ishtiaque Hossain</text>
+    <text x="58" y="157" fill="#8B979F" font-size="16" letter-spacing="0.3">Maker of fine Porcine Software.</text>
+  </g>
+
+  <path d="M786 46H884L916 78V142L884 174H786L754 142V78Z" fill="#0E1519" stroke="#39464E" />
+  <path d="M786 46H822 M884 174H848" stroke="#50C878" stroke-width="2" />
+  <path d="M771 78V142 M899 78V142" stroke="#202B31" />
+  <circle cx="786" cy="66" r="2.5" fill="#66737C" />
+  <circle cx="884" cy="154" r="2.5" fill="#66737C" />
+  <text x="835" y="125" text-anchor="middle" fill="#D5DCE1" font-family="'Segoe UI', Inter, Arial, sans-serif" font-size="42" font-weight="600" letter-spacing="3">IH</text>
+  <circle cx="880" cy="72" r="3" fill="#50C878" />
+</svg>
