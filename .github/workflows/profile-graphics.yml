@@ -15,12 +15,25 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Generate holo streak card
-        uses: DenverCoder1/github-readme-streak-stats@51cfb8879073b4c016ce6286016de0b14d179077
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
-          options: user=${{ github.repository_owner }}&hide_border=false&background=135,04070D,0F1B2E&border=2C4262&stroke=1E3049&ring=FF9E2C&fire=FF9E2C&currStreakNum=E6EDF5&currStreakLabel=FF9E2C&sideNums=E6EDF5&sideLabels=8FA3BB&dates=52657C&border_radius=4&timezone=America/Vancouver&disable_animations=true
-          path: dist/streak.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Fetch contribution telemetry
+        run: |
+          mkdir -p dist
+          node tools/fetch-telemetry.mjs "${{ github.repository_owner }}" > dist/telemetry.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TZ_NAME: America/Vancouver
+
+      - name: Render telemetry panel
+        run: node tools/build-telemetry.mjs dist/telemetry.json dist/telemetry.svg
 
       - name: Publish to the output branch
         uses: crazy-max/ghaction-github-pages@v4

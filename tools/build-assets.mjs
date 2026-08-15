@@ -1,151 +1,23 @@
 #!/usr/bin/env node
-// Generates the profile README graphics (assets/*.svg).
+// Generates the static profile README graphics (assets/*.svg).
 // All display text is outlined to paths so the typography renders identically
 // everywhere (GitHub serves README SVGs through <img>, which cannot load web fonts).
 //
-//   node tools/build-assets.mjs            → writes assets/*.svg
+//   npm run build            → node tools/build-assets.mjs → assets/*.svg
 //
 // Fonts (SIL Open Font License) live in tools/fonts/:
 //   Michroma        — wide geometric display face (Eurostile-Extended lineage)
 //   Share Tech Mono — readouts, labels, body copy
+//
+// The live telemetry panel is built separately by tools/build-telemetry.mjs
+// inside .github/workflows/profile-graphics.yml.
 
-import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
-import opentype from "opentype.js";
+import {
+  C, F, GLOW, HEAD, T, bracket, chamfer, fitSize, here, hexPatternDef, hexPoints, mulberry32, scanlinesDef, textWidth, writeSvg,
+} from "./lib.mjs";
 
-const here = path.dirname(fileURLToPath(import.meta.url));
-const FONT_DIR = process.env.FONT_DIR || path.join(here, "fonts");
 const OUT_DIR = process.env.OUT_DIR || path.join(here, "..", "assets");
-fs.mkdirSync(OUT_DIR, { recursive: true });
-
-// ---------------------------------------------------------------- palette
-const C = {
-  space: "#04070D",
-  panel: "#0A1220",
-  panel2: "#0F1B2E",
-  edge: "#1E3049",
-  edge2: "#2C4262",
-  amber: "#FF9E2C",
-  amberHi: "#FFC46B",
-  amberDim: "#8A5619",
-  cyan: "#4FD1E8",
-  text: "#E6EDF5",
-  soft: "#DCE6F0",
-  muted: "#8FA3BB",
-  dim: "#52657C",
-};
-
-// ---------------------------------------------------------------- fonts
-function loadFont(file) {
-  const buf = fs.readFileSync(path.join(FONT_DIR, file));
-  return opentype.parse(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength));
-}
-const F = {
-  display: loadFont("Michroma-Regular.ttf"),
-  mono: loadFont("ShareTechMono-Regular.ttf"),
-};
-
-// Replace glyphs the font lacks with safe fallbacks.
-function sanitize(font, text) {
-  return [...text]
-    .map((ch) => (font.charToGlyphIndex(ch) > 0 ? ch : { "·": "/", "◢": ">", "°": "d", "—": "-", "–": "-" }[ch] ?? ch))
-    .join("");
-}
-
-function textWidth(font, text, size, ls = 0) {
-  return font.getAdvanceWidth(sanitize(font, text), size, { kerning: true, letterSpacing: ls });
-}
-
-/** Outlined text → <path>. anchor: start | middle | end. ls = letter spacing in em. */
-function T(fontKey, text, x, y, size, { ls = 0, anchor = "start", fill = C.text, attrs = "" } = {}) {
-  const font = F[fontKey];
-  const clean = sanitize(font, text);
-  const w = textWidth(font, clean, size, ls);
-  const x0 = anchor === "middle" ? x - w / 2 : anchor === "end" ? x - w : x;
-  const d = font.getPath(clean, x0, y, size, { kerning: true, letterSpacing: ls }).toPathData(2);
-  return `<path d="${d}" fill="${fill}" ${attrs}/>`;
-}
-
-// Fit display text into maxWidth by shrinking size.
-function fitSize(fontKey, text, maxWidth, startSize, ls) {
-  let s = startSize;
-  while (s > 8 && textWidth(F[fontKey], text, s, ls) > maxWidth) s -= 0.5;
-  return s;
-}
-
-// ---------------------------------------------------------------- geometry
-/** Chamfered rectangle polygon points. cuts = {tl,tr,br,bl} in px. */
-function chamfer(x, y, w, h, cuts) {
-  const { tl = 0, tr = 0, br = 0, bl = 0 } = cuts;
-  const p = [
-    [x + tl, y],
-    [x + w - tr, y],
-    [x + w, y + tr],
-    [x + w, y + h - br],
-    [x + w - br, y + h],
-    [x + bl, y + h],
-    [x, y + h - bl],
-    [x, y + tl],
-  ];
-  return p.map(([px, py]) => `${px},${py}`).join(" ");
-}
-
-function bracket(x, y, len, dirX, dirY, stroke = C.amber) {
-  // L-shaped corner bracket, opening toward (dirX, dirY).
-  return `<path d="M${x} ${y + len * dirY} V${y} H${x + len * dirX}" fill="none" stroke="${stroke}" stroke-width="1.5"/>`;
-}
-
-function hexPoints(cx, cy, r, flat = true) {
-  const pts = [];
-  for (let i = 0; i < 6; i++) {
-    const a = (Math.PI / 3) * i + (flat ? 0 : Math.PI / 6);
-    pts.push(`${(cx + r * Math.cos(a)).toFixed(2)},${(cy + r * Math.sin(a)).toFixed(2)}`);
-  }
-  return pts.join(" ");
-}
-
-// Deterministic PRNG so builds are reproducible.
-function mulberry32(seed) {
-  return () => {
-    seed |= 0;
-    seed = (seed + 0x6d2b79f5) | 0;
-    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-// ---------------------------------------------------------------- shared defs
-function hexPatternDef(id, r = 14, opacity = 0.05) {
-  const w = Math.sqrt(3) * r;
-  const h = 3 * r;
-  // Two pointy-top hexes tile a (w × 3r) cell.
-  const hexA = hexPoints(w / 2, r, r, false);
-  const hexB = hexPoints(0, r * 2.5, r, false);
-  const hexC = hexPoints(w, r * 2.5, r, false);
-  return `<pattern id="${id}" width="${w.toFixed(3)}" height="${h}" patternUnits="userSpaceOnUse">
-    <g fill="none" stroke="#9FC4FF" stroke-opacity="${opacity}" stroke-width="0.8">
-      <polygon points="${hexA}"/><polygon points="${hexB}"/><polygon points="${hexC}"/>
-    </g>
-  </pattern>`;
-}
-
-function scanlinesDef(id, opacity = 0.05) {
-  return `<pattern id="${id}" width="4" height="3" patternUnits="userSpaceOnUse">
-    <rect width="4" height="1" fill="#000000" fill-opacity="${opacity}"/>
-  </pattern>`;
-}
-
-const GLOW = `<filter id="glow" x="-20%" y="-50%" width="140%" height="200%">
-    <feGaussianBlur stdDeviation="3" result="b"/>
-    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-  </filter>`;
-
-const HEAD = (w, h, title, desc) =>
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-labelledby="t d">
-  <title id="t">${title}</title>
-  <desc id="d">${desc}</desc>`;
 
 // ================================================================ HERO
 function hero() {
@@ -171,14 +43,12 @@ function hero() {
 
   // Left segmented meter
   let meter = "";
-  const segs = 12;
-  for (let i = 0; i < segs; i++) {
+  for (let i = 0; i < 12; i++) {
     const y = 64 + i * 15;
     const lit = i < 9;
     meter += `<rect x="44" y="${y}" width="4" height="11" fill="${lit ? C.amber : C.amberDim}" opacity="${lit ? 1 : 0.55}"/>`;
   }
 
-  // Name — fit to width
   const NAME = "ISHTIAQUE HOSSAIN";
   const nameSize = fitSize("display", NAME, 620, 36, 0.05);
 
@@ -196,15 +66,13 @@ function hero() {
     { k: "STATUS", v: "ONLINE", color: C.cyan, dot: true },
     { k: "LOCATION", v: "49.28°N  123.12°W", color: C.soft },
     { k: "UPLINK", v: "ISHTI.DEV", color: C.amber },
-    { k: "UPSTREAM", v: "ML-EXPLORE / MLX", color: C.soft },
+    { k: "LATEST", v: "TAB NAMER  ·  35M LOCAL MODEL", color: C.soft },
   ];
   let readouts = "";
   let rx = 64;
   const ky = 224, vy = 243;
   cells.forEach((c, i) => {
-    if (i > 0) {
-      readouts += `<line x1="${rx - 14}" y1="${ky - 10}" x2="${rx - 14}" y2="${vy + 3}" stroke="${C.edge2}"/>`;
-    }
+    if (i > 0) readouts += `<line x1="${rx - 14}" y1="${ky - 10}" x2="${rx - 14}" y2="${vy + 3}" stroke="${C.edge2}"/>`;
     readouts += T("mono", c.k, rx, ky, 9, { ls: 0.28, fill: C.dim });
     let vx = rx;
     if (c.dot) {
@@ -219,7 +87,7 @@ function hero() {
   const nameGlow = T("display", NAME, 64, 126, nameSize, { ls: 0.05, fill: C.amber, attrs: `opacity="0.55" filter="url(#glow)"` });
   const nameMain = T("display", NAME, 64, 126, nameSize, { ls: 0.05, fill: C.amberHi });
 
-  return `${HEAD(W, H, "Ishtiaque Hossain", "Solo founder and engineer in Vancouver. Maker of fine Porcine Software. Status: online. Uplink: ishti.dev. Upstream: ml-explore/mlx.")}
+  return `${HEAD(W, H, "Ishtiaque Hossain", "AI engineer and ML researcher in Vancouver. Trains small models and ships the products around them. Maker of fine Porcine Software. Status: online. Uplink: ishti.dev. Latest: Tab Namer, a 35M local model.")}
   <defs>
     <radialGradient id="g-amber" cx="0.18" cy="1" r="0.75"><stop offset="0" stop-color="${C.amber}" stop-opacity="0.16"/><stop offset="1" stop-color="${C.amber}" stop-opacity="0"/></radialGradient>
     <radialGradient id="g-cyan" cx="0.92" cy="0" r="0.6"><stop offset="0" stop-color="${C.cyan}" stop-opacity="0.14"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></radialGradient>
@@ -268,8 +136,8 @@ function hero() {
   ${T("mono", "DOSSIER  //  ISHTIHOSS  //  CLEARANCE: PUBLIC", 78, 79.5, 10.5, { ls: 0.22, fill: C.amber })}
   ${nameGlow}
   ${nameMain}
-  ${T("mono", "SOLO FOUNDER  ·  ENGINEER  ·  VANCOUVER", 64, 158, 15, { ls: 0.2, fill: C.soft })}
-  ${T("mono", "Maker of fine Porcine Software.  AI-native tools, built and operated end to end.", 64, 186, 13, { ls: 0.02, fill: C.muted })}
+  ${T("mono", "AI ENGINEER  ·  ML RESEARCHER  ·  VANCOUVER", 64, 158, 15, { ls: 0.2, fill: C.soft })}
+  ${T("mono", "Trains small models, ships the products around them.  Maker of fine Porcine Software.", 64, 186, 13, { ls: 0.02, fill: C.muted })}
 
   <!-- readouts -->
   <path d="M64 206 H700" stroke="${C.edge}"/>
@@ -326,55 +194,101 @@ function section(index, title, sub) {
 </svg>`;
 }
 
+// ================================================================ FRAMED PANEL (shared chrome)
+function panelChrome(W, H, hexOpacity = 0.045) {
+  const pts = chamfer(0.5, 0.5, W - 1, H - 1, { tl: 16, tr: 6, br: 16, bl: 6 });
+  return `<defs>${hexPatternDef("hex", 14, hexOpacity)}${scanlinesDef("scan", 0.05)}${GLOW}</defs>
+  <polygon points="${pts}" fill="${C.panel}" stroke="${C.edge2}"/>
+  <polygon points="${pts}" fill="url(#hex)"/>
+  <polygon points="${pts}" fill="url(#scan)"/>
+  <path d="M16 1 H220" stroke="${C.amber}" stroke-width="2" opacity="0.7"/>
+  <path d="M${W - 16} ${H - 1} H${W - 220}" stroke="${C.amber}" stroke-width="2" opacity="0.7"/>`;
+}
+
+// ================================================================ RESEARCH PANEL (Tab Namer)
+function research() {
+  const W = 960, H = 172;
+  const stats = [
+    { n: "35M", k: "PARAMETERS", s: "STUDENT  ·  VS FLAN-T5-SMALL 77M" },
+    { n: "+0.75", k: "SEALED PAIRED MARGIN", s: "BLINDED JUDGE  ·  N = 1,000" },
+    { n: "4.86M", k: "TRAINING PAIRS", s: "BODY TO TITLE  ·  FROM SCRATCH" },
+    { n: "31", k: "MATCHED CONTROL RUNS", s: "THE SNIFF TEST  ·  SEED LOTTERY" },
+  ];
+  const colW = (W - 56) / stats.length;
+  let body = "";
+  stats.forEach((s, i) => {
+    const x = 28 + i * colW;
+    if (i > 0) body += `<path d="M${x - 14} 58 V${H - 40}" stroke="${C.edge}"/>`;
+    const nSize = fitSize("display", s.n, colW - 40, 30, 0.02);
+    body += T("display", s.n, x, 92, nSize, { ls: 0.02, fill: C.amber, attrs: `opacity="0.5" filter="url(#glow)"` });
+    body += T("display", s.n, x, 92, nSize, { ls: 0.02, fill: C.amberHi });
+    body += T("mono", s.k, x + 1, 112, 9.5, { ls: 0.26, fill: C.soft });
+    body += T("mono", s.s, x + 1, 128, 8.5, { ls: 0.14, fill: C.dim });
+  });
+  return `${HEAD(W, H, "Tab Namer research readout", "Tab Namer: a 35M-parameter local title model versus FLAN-T5-small at 77M. Sealed paired margin +0.75 with a blinded judge on 1,000 samples. 4.86 million body-to-title training pairs from scratch. 31 matched control runs in The Sniff Test.")}
+  ${panelChrome(W, H)}
+  <rect x="28" y="24" width="4" height="12" fill="${C.amber}"/>
+  ${T("display", "TAB NAMER", 40, 34, 10.5, { ls: 0.14, fill: C.amber })}
+  ${T("mono", "//  LOCAL TITLE MODEL FOR PORKICODER TERMINAL TABS", 40 + textWidth(F.display, "TAB NAMER", 10.5, 0.14) + 12, 34, 9.5, { ls: 0.2, fill: C.muted })}
+  ${T("mono", "PREREGISTERED  ·  SEALED  ·  REPRODUCIBLE", W - 28, 34, 9, { ls: 0.24, anchor: "end", fill: C.dim })}
+  <path d="M28 46 H${W - 28}" stroke="${C.edge}"/>
+  ${body}
+  <path d="M28 ${H - 26} H${W - 28}" stroke="${C.edge}"/>
+  <circle cx="${W - 34}" cy="${H - 14}" r="2.5" fill="${C.cyan}" filter="url(#glow)"><animate attributeName="opacity" values="1;0.25;1" dur="1.8s" repeatCount="indefinite"/></circle>
+  ${T("mono", "CAMPAIGN ACTIVE", W - 44, H - 11, 8.5, { ls: 0.24, anchor: "end", fill: C.dim })}
+  ${T("mono", "PAPERS: THE SNIFF TEST  ·  MID-PACK GSG  ·  FOUR BEAMS, NO NEW WEIGHTS", 28, H - 11, 8.5, { ls: 0.2, fill: C.dim })}
+</svg>`;
+}
+
 // ================================================================ LOADOUT PANEL
 function loadout() {
-  const W = 960, H = 140;
+  const W = 960;
   const cols = [
-    { title: "PRODUCT & INTERFACE", items: ["TypeScript", "JavaScript", "React", "Next.js"] },
-    { title: "BACKEND & DATA", items: ["Python", "Node.js", "FastAPI", "PostgreSQL"] },
-    { title: "SYSTEMS & INFRA", items: ["MLX", "AWS", "Cloudflare", "Linux", "Git"] },
+    { title: "MODELS & TRAINING", items: ["PyTorch", "Transformers", "Seq2seq · T5", "Distillation", "MLX", "ONNX Runtime"] },
+    { title: "AGENTS & PRODUCT", items: ["TypeScript", "Electron", "Node.js", "Claude Agent SDK", "MCP", "Python"] },
+    { title: "INFRA & EVALUATION", items: ["AWS", "Cloudflare", "Linux", "Supabase · Postgres", "GPU fleets", "LLM-judge evals"] },
   ];
   const colX = [28, 336, 644];
   const colW = 288;
+  const chipH = 24, gap = 8, pad = 11, size = 12.5;
   let body = "";
+  let maxY = 60;
   cols.forEach((col, i) => {
     const x = colX[i];
     body += `<rect x="${x}" y="24" width="4" height="12" fill="${C.amber}"/>`;
     body += T("display", col.title, x + 12, 34, 10.5, { ls: 0.14, fill: C.amber });
     body += `<path d="M${x} 46 H${x + colW}" stroke="${C.edge}"/>`;
-    if (i > 0) body += `<path d="M${x - 24} 20 V${H - 20}" stroke="${C.edge}"/>`;
-    // chips (flow layout)
     let cx = x, cy = 60;
-    const chipH = 24, gap = 8, pad = 11, size = 12.5;
     for (const item of col.items) {
-      const w = Math.ceil(textWidth(F.mono, item, size, 0.06) + pad * 2);
+      const w = Math.ceil(textWidth(F.mono, item, size, 0.06) + pad * 2 + 4);
       if (cx + w > x + colW) { cx = x; cy += chipH + gap; }
       body += `<polygon points="${chamfer(cx + 0.5, cy + 0.5, w - 1, chipH - 1, { tl: 6, br: 6 })}" fill="${C.panel2}" stroke="${C.edge2}"/>`;
       body += `<rect x="${cx + 5}" y="${cy + chipH / 2 - 2}" width="3" height="4" fill="${C.amber}" opacity="0.9"/>`;
       body += T("mono", item, cx + pad + 3, cy + chipH / 2 + 4.5, size, { ls: 0.06, fill: C.soft });
       cx += w + gap;
     }
+    maxY = Math.max(maxY, cy + chipH);
   });
-  return `${HEAD(W, H, "Loadout", "Product and interface: TypeScript, JavaScript, React, Next.js. Backend and data: Python, Node.js, FastAPI, PostgreSQL. Systems and infrastructure: MLX, AWS, Cloudflare, Linux, Git.")}
-  <defs>${hexPatternDef("hex", 14, 0.045)}${scanlinesDef("scan", 0.05)}</defs>
-  <polygon points="${chamfer(0.5, 0.5, W - 1, H - 1, { tl: 16, tr: 6, br: 16, bl: 6 })}" fill="${C.panel}" stroke="${C.edge2}"/>
-  <polygon points="${chamfer(0.5, 0.5, W - 1, H - 1, { tl: 16, tr: 6, br: 16, bl: 6 })}" fill="url(#hex)"/>
-  <polygon points="${chamfer(0.5, 0.5, W - 1, H - 1, { tl: 16, tr: 6, br: 16, bl: 6 })}" fill="url(#scan)"/>
-  <path d="M16 1 H220" stroke="${C.amber}" stroke-width="2" opacity="0.7"/>
-  <path d="M${W - 16} ${H - 1} H${W - 220}" stroke="${C.amber}" stroke-width="2" opacity="0.7"/>
+  const H = maxY + 40;
+  let dividers = "";
+  cols.forEach((_, i) => { if (i > 0) dividers += `<path d="M${colX[i] - 24} 20 V${H - 34}" stroke="${C.edge}"/>`; });
+  return `${HEAD(W, H, "Loadout", "Models and training: PyTorch, Transformers, seq2seq T5, distillation, MLX, ONNX Runtime. Agents and product: TypeScript, Electron, Node.js, Claude Agent SDK, MCP, Python. Infrastructure and evaluation: AWS, Cloudflare, Linux, Supabase and Postgres, GPU fleets, LLM-judge evaluations.")}
+  ${panelChrome(W, H)}
+  ${dividers}
   ${body}
-  ${T("mono", "LOADOUT  //  FULL-STACK  //  SHIP & OPERATE", W - 24, H - 12, 9, { ls: 0.24, anchor: "end", fill: C.muted, attrs: `opacity="0.8"` })}
+  <path d="M28 ${H - 26} H${W - 28}" stroke="${C.edge}"/>
+  ${T("mono", "LOADOUT  //  RESEARCH TO RELEASE  //  ONE OPERATOR", W - 28, H - 11, 8.5, { ls: 0.24, anchor: "end", fill: C.muted, attrs: `opacity="0.8"` })}
 </svg>`;
 }
 
 // ================================================================ FOOTER
 function footer() {
   const W = 960, H = 52;
-  const msg = "END OF DOSSIER  //  BUILDING FROM VANCOUVER  ·  DESIGN  ·  CODE  ·  INFRASTRUCTURE  ·  SUPPORT";
+  const msg = "END OF DOSSIER  //  VANCOUVER  ·  MODELS  ·  PRODUCTS  ·  INFRASTRUCTURE  ·  SUPPORT";
   const size = 10.5, ls = 0.22;
   const w = textWidth(F.mono, msg, size, ls);
   const x0 = (W - w) / 2;
-  return `${HEAD(W, H, "End of dossier", "Building from Vancouver: design, code, infrastructure, support.")}
+  return `${HEAD(W, H, "End of dossier", "Vancouver: models, products, infrastructure, support.")}
   <defs>${scanlinesDef("scan", 0.05)}</defs>
   <polygon points="${chamfer(0.5, 0.5, W - 1, H - 1, { tl: 12, tr: 12, br: 12, bl: 12 })}" fill="${C.panel}" stroke="${C.edge2}"/>
   <polygon points="${chamfer(0.5, 0.5, W - 1, H - 1, { tl: 12, tr: 12, br: 12, bl: 12 })}" fill="url(#scan)"/>
@@ -389,15 +303,13 @@ function footer() {
 const files = {
   "profile-header.svg": hero(),
   "section-01-dossier.svg": section("01", "DOSSIER", "PERSONNEL FILE"),
-  "section-02-operations.svg": section("02", "ACTIVE OPERATIONS", "DEPLOYED PRODUCTS"),
-  "section-03-upstream.svg": section("03", "UPSTREAM", "OPEN SOURCE"),
-  "section-04-loadout.svg": section("04", "LOADOUT", "TECHNICAL RANGE"),
-  "section-05-telemetry.svg": section("05", "TELEMETRY", "GITHUB ACTIVITY"),
+  "section-02-research.svg": section("02", "RESEARCH", "LATEST WORK  ·  TAB NAMER"),
+  "section-03-operations.svg": section("03", "ACTIVE OPERATIONS", "SHIPPED END TO END"),
+  "section-04-upstream.svg": section("04", "UPSTREAM", "OPEN SOURCE"),
+  "section-05-loadout.svg": section("05", "LOADOUT", "TECHNICAL RANGE"),
+  "section-06-telemetry.svg": section("06", "TELEMETRY", "GITHUB ACTIVITY"),
+  "research.svg": research(),
   "loadout.svg": loadout(),
   "footer.svg": footer(),
 };
-for (const [name, svg] of Object.entries(files)) {
-  const out = path.join(OUT_DIR, name);
-  fs.writeFileSync(out, svg.replace(/\n\s*\n/g, "\n") + "\n");
-  console.log(`wrote ${path.relative(process.cwd(), out)} (${(fs.statSync(out).size / 1024).toFixed(1)} KB)`);
-}
+for (const [name, svg] of Object.entries(files)) writeSvg(path.join(OUT_DIR, name), svg);
