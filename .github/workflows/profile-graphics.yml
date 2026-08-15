@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Generate gunmetal streak card
+      - name: Generate holo streak card
         uses: DenverCoder1/github-readme-streak-stats@51cfb8879073b4c016ce6286016de0b14d179077
         with:
-          options: user=${{ github.repository_owner }}&hide_border=false&background=135,0C1115,151C21&border=344149&stroke=263139&ring=50C878&fire=0C1115&currStreakNum=D5DCE1&currStreakLabel=50C878&sideNums=D5DCE1&sideLabels=8B979F&dates=66727B&border_radius=4&timezone=America/Vancouver&disable_animations=true
+          options: user=${{ github.repository_owner }}&hide_border=false&background=135,04070D,0F1B2E&border=2C4262&stroke=1E3049&ring=FF9E2C&fire=FF9E2C&currStreakNum=E6EDF5&currStreakLabel=FF9E2C&sideNums=E6EDF5&sideLabels=8FA3BB&dates=52657C&border_radius=4&timezone=America/Vancouver&disable_animations=true
           path: dist/streak.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
