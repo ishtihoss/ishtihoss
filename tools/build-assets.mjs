@@ -66,7 +66,7 @@ function hero() {
     { k: "STATUS", v: "ONLINE", color: C.cyan, dot: true },
     { k: "LOCATION", v: "49.28°N  123.12°W", color: C.soft },
     { k: "UPLINK", v: "ISHTI.DEV", color: C.amber },
-    { k: "LATEST", v: "TAB NAMER  ·  35M LOCAL MODEL", color: C.soft },
+    { k: "LATEST", v: "TITLE-SFT FLAN  ·  TAB NAMER", color: C.soft },
   ];
   let readouts = "";
   let rx = 64;
@@ -87,7 +87,7 @@ function hero() {
   const nameGlow = T("display", NAME, 64, 126, nameSize, { ls: 0.05, fill: C.amber, attrs: `opacity="0.55" filter="url(#glow)"` });
   const nameMain = T("display", NAME, 64, 126, nameSize, { ls: 0.05, fill: C.amberHi });
 
-  return `${HEAD(W, H, "Ishtiaque Hossain", "AI engineer and ML researcher in Vancouver. Trains small models and ships the products around them. Maker of fine Porcine Software. Status: online. Uplink: ishti.dev. Latest: Tab Namer, a 35M local model.")}
+  return `${HEAD(W, H, "Ishtiaque Hossain", "AI engineer and ML researcher in Vancouver. Trains small models and ships the products around them. Maker of fine Porcine Software. Status: online. Uplink: ishti.dev. Latest: Title-SFT FLAN tab namer, 7.59 on holdout 1000.")}
   <defs>
     <radialGradient id="g-amber" cx="0.18" cy="1" r="0.75"><stop offset="0" stop-color="${C.amber}" stop-opacity="0.16"/><stop offset="1" stop-color="${C.amber}" stop-opacity="0"/></radialGradient>
     <radialGradient id="g-cyan" cx="0.92" cy="0" r="0.6"><stop offset="0" stop-color="${C.cyan}" stop-opacity="0.14"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></radialGradient>
@@ -209,10 +209,10 @@ function panelChrome(W, H, hexOpacity = 0.045) {
 function research() {
   const W = 960, H = 172;
   const stats = [
-    { n: "35M", k: "PARAMETERS", s: "STUDENT  ·  VS FLAN-T5-SMALL 77M" },
-    { n: "+0.75", k: "SEALED PAIRED MARGIN", s: "BLINDED JUDGE  ·  N = 1,000" },
-    { n: "4.86M", k: "TRAINING PAIRS", s: "BODY TO TITLE  ·  FROM SCRATCH" },
-    { n: "31", k: "MATCHED CONTROL RUNS", s: "THE SNIFF TEST  ·  SEED LOTTERY" },
+    { n: "7.59", k: "HOLDOUT 1000", s: "TITLE-SFT FLAN  ·  85.7% USEFUL" },
+    { n: "+0.21", k: "VS SESSION-10 SHIP", s: "REPLICATED ON HOLDOUT 1000B" },
+    { n: "0", k: "HYBRID A ON SFT", s: "GLUE HURT THE FLUENT TITLES" },
+    { n: "31", k: "MATCHED CONTROLS", s: "THE SNIFF TEST  ·  SEED LOTTERY" },
   ];
   const colW = (W - 56) / stats.length;
   let body = "";
@@ -225,7 +225,7 @@ function research() {
     body += T("mono", s.k, x + 1, 112, 9.5, { ls: 0.26, fill: C.soft });
     body += T("mono", s.s, x + 1, 128, 8.5, { ls: 0.14, fill: C.dim });
   });
-  return `${HEAD(W, H, "Tab Namer research readout", "Tab Namer: a 35M-parameter local title model versus FLAN-T5-small at 77M. Sealed paired margin +0.75 with a blinded judge on 1,000 samples. 4.86 million body-to-title training pairs from scratch. 31 matched control runs in The Sniff Test.")}
+  return `${HEAD(W, H, "Tab Namer research readout", "Tab Namer ship is Title-SFT FLAN raw, arm flat1e4. Holdout 1000: 7.59 / 85.7% versus the Session-10 ship 7.38 / 83.5%. Hybrid A stayed off. 31 matched control runs in The Sniff Test showed a seed lottery, not a mechanism.")}
   ${panelChrome(W, H)}
   <rect x="28" y="24" width="4" height="12" fill="${C.amber}"/>
   ${T("display", "TAB NAMER", 40, 34, 10.5, { ls: 0.14, fill: C.amber })}
@@ -236,7 +236,7 @@ function research() {
   <path d="M28 ${H - 26} H${W - 28}" stroke="${C.edge}"/>
   <circle cx="${W - 34}" cy="${H - 14}" r="2.5" fill="${C.cyan}" filter="url(#glow)"><animate attributeName="opacity" values="1;0.25;1" dur="1.8s" repeatCount="indefinite"/></circle>
   ${T("mono", "CAMPAIGN ACTIVE", W - 44, H - 11, 8.5, { ls: 0.24, anchor: "end", fill: C.dim })}
-  ${T("mono", "PAPERS: THE SNIFF TEST  ·  MID-PACK GSG  ·  FOUR BEAMS, NO NEW WEIGHTS", 28, H - 11, 8.5, { ls: 0.2, fill: C.dim })}
+  ${T("mono", "PAPERS: SNIFF TEST  ·  FOUR BEAMS  ·  SESSION 10  ·  SESSION 11 FLAT1E4", 28, H - 11, 8.5, { ls: 0.2, fill: C.dim })}
 </svg>`;
 }
 
@@ -303,7 +303,7 @@ function footer() {
 const files = {
   "profile-header.svg": hero(),
   "section-01-dossier.svg": section("01", "DOSSIER", "PERSONNEL FILE"),
-  "section-02-research.svg": section("02", "RESEARCH", "LATEST WORK  ·  TAB NAMER"),
+  "section-02-research.svg": section("02", "RESEARCH", "LATEST WORK  ·  TITLE-SFT FLAN"),
   "section-03-operations.svg": section("03", "ACTIVE OPERATIONS", "SHIPPED END TO END"),
   "section-04-upstream.svg": section("04", "UPSTREAM", "OPEN SOURCE"),
   "section-05-loadout.svg": section("05", "LOADOUT", "TECHNICAL RANGE"),
