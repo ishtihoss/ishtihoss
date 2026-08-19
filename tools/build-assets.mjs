@@ -66,7 +66,7 @@ function hero() {
     { k: "STATUS", v: "ONLINE", color: C.cyan, dot: true },
     { k: "LOCATION", v: "49.28°N  123.12°W", color: C.soft },
     { k: "UPLINK", v: "ISHTI.DEV", color: C.amber },
-    { k: "LATEST", v: "TITLE-SFT FLAN  ·  TAB NAMER", color: C.soft },
+    { k: "LATEST", v: "TAB NAMER  ·  77M ON HUGGING FACE", color: C.soft },
   ];
   let readouts = "";
   let rx = 64;
@@ -87,7 +87,7 @@ function hero() {
   const nameGlow = T("display", NAME, 64, 126, nameSize, { ls: 0.05, fill: C.amber, attrs: `opacity="0.55" filter="url(#glow)"` });
   const nameMain = T("display", NAME, 64, 126, nameSize, { ls: 0.05, fill: C.amberHi });
 
-  return `${HEAD(W, H, "Ishtiaque Hossain", "AI engineer and ML researcher in Vancouver. Trains small models and ships the products around them. Maker of fine Porcine Software. Status: online. Uplink: ishti.dev. Latest: Title-SFT FLAN tab namer, 7.59 on holdout 1000.")}
+  return `${HEAD(W, H, "Ishtiaque Hossain", "AI engineer and ML researcher in Vancouver. Trains small models and ships the products around them. Maker of fine Porcine Software. Status: online. Uplink: ishti.dev. Latest: Tab Namer 77M on Hugging Face.")}
   <defs>
     <radialGradient id="g-amber" cx="0.18" cy="1" r="0.75"><stop offset="0" stop-color="${C.amber}" stop-opacity="0.16"/><stop offset="1" stop-color="${C.amber}" stop-opacity="0"/></radialGradient>
     <radialGradient id="g-cyan" cx="0.92" cy="0" r="0.6"><stop offset="0" stop-color="${C.cyan}" stop-opacity="0.14"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></radialGradient>
@@ -209,10 +209,10 @@ function panelChrome(W, H, hexOpacity = 0.045) {
 function research() {
   const W = 960, H = 172;
   const stats = [
-    { n: "7.59", k: "HOLDOUT 1000", s: "TITLE-SFT FLAN  ·  85.7% USEFUL" },
-    { n: "+0.21", k: "VS SESSION-10 SHIP", s: "REPLICATED ON HOLDOUT 1000B" },
-    { n: "0", k: "HYBRID A ON SFT", s: "GLUE HURT THE FLUENT TITLES" },
-    { n: "31", k: "MATCHED CONTROLS", s: "THE SNIFF TEST  ·  SEED LOTTERY" },
+    { n: "77M", k: "PARAMETERS", s: "SHIPPED  ·  FLAN-T5-SMALL LINE" },
+    { n: "+4.17", k: "VS GOOGLE BASE", s: "BLINDED JUDGE  ·  N = 500" },
+    { n: "7.59", k: "HOLDOUT MEAN", s: "TWO FRESH 1,000-TASK SETS" },
+    { n: "HF", k: "OPEN WEIGHTS", s: "PORKR / PORKICODER-TAB-NAMER-77M" },
   ];
   const colW = (W - 56) / stats.length;
   let body = "";
@@ -225,7 +225,7 @@ function research() {
     body += T("mono", s.k, x + 1, 112, 9.5, { ls: 0.26, fill: C.soft });
     body += T("mono", s.s, x + 1, 128, 8.5, { ls: 0.14, fill: C.dim });
   });
-  return `${HEAD(W, H, "Tab Namer research readout", "Tab Namer ship is Title-SFT FLAN raw, arm flat1e4. Holdout 1000: 7.59 / 85.7% versus the Session-10 ship 7.38 / 83.5%. Hybrid A stayed off. 31 matched control runs in The Sniff Test showed a seed lottery, not a mechanism.")}
+  return `${HEAD(W, H, "Tab Namer research readout", "Tab Namer 77M: local titles for PorkiCoder tabs. Fine-tuned FLAN-T5-small. Average 7.28 versus Google 3.12 on 500 tasks. Holdout means 7.59 and 7.55. Weights on Hugging Face.")}
   ${panelChrome(W, H)}
   <rect x="28" y="24" width="4" height="12" fill="${C.amber}"/>
   ${T("display", "TAB NAMER", 40, 34, 10.5, { ls: 0.14, fill: C.amber })}
@@ -236,7 +236,7 @@ function research() {
   <path d="M28 ${H - 26} H${W - 28}" stroke="${C.edge}"/>
   <circle cx="${W - 34}" cy="${H - 14}" r="2.5" fill="${C.cyan}" filter="url(#glow)"><animate attributeName="opacity" values="1;0.25;1" dur="1.8s" repeatCount="indefinite"/></circle>
   ${T("mono", "CAMPAIGN ACTIVE", W - 44, H - 11, 8.5, { ls: 0.24, anchor: "end", fill: C.dim })}
-  ${T("mono", "PAPERS: SNIFF TEST  ·  FOUR BEAMS  ·  SESSION 10  ·  SESSION 11 FLAT1E4", 28, H - 11, 8.5, { ls: 0.2, fill: C.dim })}
+  ${T("mono", "WEIGHTS: HUGGINGFACE.CO/PORKR/PORKICODER-TAB-NAMER-77M", 28, H - 11, 8.5, { ls: 0.2, fill: C.dim })}
 </svg>`;
 }
 

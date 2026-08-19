@@ -21,19 +21,17 @@ Current focus: sub-100M-parameter models that run locally inside my own products
 
 <img src="./assets/section-02-research.svg" alt="02 · Research — latest work: Tab Namer" width="100%" />
 
-<img src="./assets/research.svg" alt="Tab Namer ship is Title-SFT FLAN raw, arm flat1e4. Holdout 1000: 7.59 / 85.7% versus the Session-10 ship 7.38 / 83.5%. Hybrid A stayed off. 31 matched control runs in The Sniff Test showed a seed lottery, not a mechanism." width="100%" />
+<img src="./assets/research.svg" alt="Tab Namer 77M readout: shipped FLAN-T5-small line; +4.17 versus Google base on 500 tasks; holdout means 7.59 and 7.55; open weights on Hugging Face." width="100%" />
 
-**Tab Namer** names [PorkiCoder](https://porkicoder.com) terminal tabs on-device. The work that mattered was not a 35M student we chose not to ship. It was preregistered boards, a blinded judge, and the finding that fluent Title-SFT FLAN titles beat extractive 35M glue. Chronological:
+**[Tab Namer 77M](https://huggingface.co/porkr/porkicoder-tab-namer-77m)** names [PorkiCoder](https://porkicoder.com) terminal tabs from a short task description. Tiny 12.7M and 35M from-scratch models could pick a real noun and still scramble English. This file starts from Google FLAN-T5-small, then a few hours of extra training on DigitalOcean Ada GPUs.
 
-| Date | Paper | Finding |
-|:--|:--|:--|
-| 12 Aug | **[The Sniff Test](https://porkicoder.com/research/the-sniff-test.html)** | A 12.7M model *seemed* to stop repeating words after Jules Verne. 31 matched controls showed a seed lottery, not a mechanism. One run is not evidence. |
-| 14 Aug | **[FLAN + centroid](https://porkicoder.com/research/tab-titles-flan-centroid.html)** | The 2+1 glue is load-bearing. FLAN-T5-small plus a centroid highlighter became the quality bar, not a student we hoped would beat it. |
-| 15 Aug | **[Four beams, no new weights](https://porkicoder.com/research/tab-namer-four-beams.html)** | Changing only decode can win a sealed packet (paired +0.752 vs title-tuned FLAN) and still fail the usefulness gate. Honest negative gates stay published. |
-| 16 Aug | **[176k Flash-Lite CE](https://porkicoder.com/research/2026-08-16_g300k-flashlite-test.html)** | 175k more Gemini titles did not beat the pin. Quantity inverted the judge. More CE was the wrong lever. |
-| 16 Aug | **[Session 4](https://porkicoder.com/research/session4_results.html)** | Judged-SFT beat *our* pin on Terminal-board. FLAN stayed ahead. Two boards: do not mix SO 6.11 with Terminal 7.11. |
-| 17 Aug | **[Session 10](https://porkicoder.com/research/session10_results.html)** | Title-SFT FLAN raw is the candidate. Hybrid A *hurts* these fluent titles (5.78 vs 6.55). Size and 29 ms accepted. |
-| 17 Aug | **[Session 11](https://porkicoder.com/research/session11_results.html)** | Continue that SFT on the leak-checked Aug-12 mix. Arm `flat1e4` is the ship: **7.59 / 85.7%** on holdout 1000, **7.55 / 84.5%** on 1000b. Next move is more data, not more epochs. |
+Weights: **[huggingface.co/porkr/porkicoder-tab-namer-77m](https://huggingface.co/porkr/porkicoder-tab-namer-77m)**. On 500 held-out tasks the trained model averaged **7.28** against Google's unchanged **3.12** (+4.17). Two later 1,000-task holdouts sit at **7.59** and **7.55**.
+
+| Link | What |
+|:--|:--|
+| **[Open weights](https://huggingface.co/porkr/porkicoder-tab-namer-77m)** | 77M Title-SFT FLAN, raw greedy titles, 20 Google-vs-ours examples on the card |
+| **[Session 11 ship note](https://porkicoder.com/research/session11_results.html)** | Continue-SFT on the leak-checked mix; holdout 1000 / 1000b |
+| **[Research index](https://porkicoder.com/research/)** | Earlier campaign notes |
 
 <img src="./assets/section-03-operations.svg" alt="03 · Active operations — shipped end to end" width="100%" />
 
