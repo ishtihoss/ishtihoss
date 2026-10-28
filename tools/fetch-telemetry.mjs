@@ -16,15 +16,28 @@ if (!token) {
   process.exit(1);
 }
 
-async function gql(query, variables) {
-  const res = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: { Authorization: `bearer ${token}`, "Content-Type": "application/json", "User-Agent": "ishtihoss-profile" },
-    body: JSON.stringify({ query, variables }),
-  });
-  const json = await res.json();
-  if (!res.ok || json.errors) throw new Error(`GraphQL: ${res.status} ${JSON.stringify(json.errors || json)}`);
-  return json.data;
+// GitHub occasionally answers with an HTML 502/504 page instead of JSON; retry
+// those and network errors with backoff, but fail fast on real query errors.
+async function gql(query, variables, attempts = 4) {
+  for (let attempt = 1; ; attempt++) {
+    let status = 0, json = null, cause = "";
+    try {
+      const res = await fetch("https://api.github.com/graphql", {
+        method: "POST",
+        headers: { Authorization: `bearer ${token}`, "Content-Type": "application/json", "User-Agent": "ishtihoss-profile" },
+        body: JSON.stringify({ query, variables }),
+      });
+      status = res.status;
+      json = JSON.parse(await res.text());
+    } catch (err) {
+      cause = err.message;
+    }
+    if (json && status < 400 && !json.errors) return json.data;
+    const detail = json ? JSON.stringify(json.errors || json) : `non-JSON response${cause ? ` (${cause})` : ""}`;
+    if ((json && status < 500) || attempt >= attempts) throw new Error(`GraphQL: ${status} ${detail}`);
+    console.error(`GraphQL: ${status} ${detail}; retry ${attempt}/${attempts - 1}`);
+    await new Promise((r) => setTimeout(r, 2000 * 2 ** (attempt - 1)));
+  }
 }
 
 // Today's date in the user's timezone (YYYY-MM-DD).
